@@ -1,5 +1,6 @@
 package lotto;
 
+import lotto.model.Lotto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,4 +23,23 @@ class LottoTest {
     }
 
     // TODO: 추가 기능 구현에 따른 테스트 코드 작성
+    @Test
+    void 로또_번호의_개수가_6개보다_작으면_예외가_발생한다() {
+        assertThatThrownBy(() -> new Lotto(List.of(1, 2, 3, 4)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("로또 번호에 허용 범위(1~45)를 벗어난 숫자가 있으면 예외가 발생한다. (하한 미만)")
+    @Test
+    void 범위_하한_미만이면_예외() {
+        assertThatThrownBy(() -> new Lotto(List.of(0, 2, 3, 4, 5, 6)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("로또 번호에 허용 범위(1~45)를 벗어난 숫자가 있으면 예외가 발생한다. (상한 초과)")
+    @Test
+    void 범위_상한_초과면_예외() {
+        assertThatThrownBy(() -> new Lotto(List.of(1, 2, 3, 4, 5, 46)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
